@@ -12,6 +12,8 @@ protected:
     Rectangle frameRec;
     Texture2D texture;
     bool active;
+    float height;
+    float width;
     
 public:
     Entity(Vector2 position, float height, float width, std::string path);

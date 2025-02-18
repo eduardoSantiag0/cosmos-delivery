@@ -10,6 +10,9 @@ private:
     Cores cor;
     
 public:
+    
+    double creationTime;
+    
     DeliveryPoint(Vector2 position, float height, float width, std::string path, int cor);
     Cores getCor() const;
     void Draw() override;

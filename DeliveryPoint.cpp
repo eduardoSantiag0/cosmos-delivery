@@ -3,7 +3,8 @@
 DeliveryPoint::DeliveryPoint(Vector2 position, float height, float width, std::string path, int cor)
 : Entity (position, height, width, path)
 {
-    // Cores novaCor;
+    this->creationTime = GetTime(); 
+
     switch (cor) {
         case 0: this->cor  = Cores::VERMELHO; break;
         case 1: this->cor = Cores::VERDE; break;

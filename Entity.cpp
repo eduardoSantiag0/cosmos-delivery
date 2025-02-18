@@ -2,7 +2,7 @@
 #include <iostream>
 
 Entity::Entity(Vector2 position, float height, float width, std::string path) 
-: position(position), active(true)
+: position(position), active(true), width(width), height(height)
 {
     frameRec = { position.x, position.y, height, width};
     texture = LoadTexture(path.c_str());
