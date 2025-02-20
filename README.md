@@ -21,3 +21,7 @@ Como **capitã da sua própria nave**, sua tarefa é cruzar as estrelas, transpo
 
 
 ![Cosmos Delivery Logo](/readme/amelia.png)
+
+
+## Print do Jogo:
+![Printscreen](/readme/prints/print1.png)

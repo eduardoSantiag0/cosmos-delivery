@@ -37,6 +37,7 @@ int main() {
   Texture2D background = LoadTexture("resources/background.png");
 
   bool gameStarted = false;
+  bool gameOver = false;
 
   SetTargetFPS(60);
   while (!WindowShouldClose()) {
@@ -56,6 +57,29 @@ int main() {
           gameStarted = true;
       }
       continue;
+  }
+
+  if (gameOver) {
+    BeginDrawing();
+    DrawText("GAME OVER", screenWidth / 2 - 100, screenHeight / 2 - 50, 40, RED);
+    // DrawText("Pressione R para reiniciar", screenWidth / 2 - 150, screenHeight / 2 + 20, 20, WHITE);
+    EndDrawing();
+
+    // if (IsKeyPressed(KEY_R)) {
+    //     gameOver = false;
+
+    //     player = Player(centerScreen, 80, 80, "resources/player-spaceship-2.png"); 
+        
+    //     asteroids.clear();
+    //     vetorPacotes.clear();
+    //     vetorPontosEntrega.clear();
+    // }
+
+    if (IsKeyPressed(KEY_SPACE)) {
+      UnloadTexture(background);
+      CloseWindow();
+    }
+    continue;
   }
     // Update
     //-------------------------------
@@ -121,6 +145,7 @@ int main() {
       float y = (float)GetRandomValue(0, screenHeight - 40);
       int color = GetRandomValue(0, 2);
       // Cores color = static_cast<Cores>(GetRandomValue(0, 2));
+      // player.filaEntrega.enfileirar(color);
       vetorPacotes.emplace_back(Vector2{x, y}, 40, 40, "", color);
       std::cout << "Package Criado" << std::endl;
       lastPackageSpawnTime = GetTime();
@@ -132,8 +157,19 @@ int main() {
           if (CheckCollisionRecs(bullet.getFrameRec(), asteroid.getFrameRec())) {
               asteroid.Deactivate();
               bullet.Deactivate();
-              player.addPontos(10);
+              player.addPontos(50);
           }
+      }
+    }
+
+    for (auto& asteroid : asteroids) {
+      if (CheckCollisionRecs(player.getFrameRec(), asteroid.getFrameRec())) {
+        player.perdeuVida(); 
+        asteroid.Deactivate();
+        if (player.getVidas() <= 0) { 
+          gameOver = true; 
+        }
+        break;
       }
     }
     // Drawing
@@ -163,7 +199,10 @@ int main() {
 
       DrawText("Cosmos Delivery!", 20, 20, 20, YELLOW);
       DrawText(TextFormat("Pontuação: %d", player.getScore()), 20, 50, 30, WHITE);
-    
+
+      const Weapon* armaMaior = player.obterMaior();
+      DrawText(TextFormat("Arma: %s", armaMaior->nome.c_str()), screenWidth - 300, screenHeight - 40, 20, WHITE);
+
     EndDrawing();
 
     for (int i = asteroids.size() - 1; i >= 0; i--) {
